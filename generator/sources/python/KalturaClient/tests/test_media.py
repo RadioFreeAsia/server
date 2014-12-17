@@ -113,6 +113,9 @@ class Utf8_tests(KalturaBaseTest):
         mediaEntry = self.client.media.addFromUploadedFile(mediaEntry, uploadTokenId)
         self.addCleanup(self.client.media.delete, mediaEntry.getId())
         
+        #Must 'approve' entry - test will fail if auto-approve is turned off on test account.
+        self.client.media.approve(mediaEntry.getId())
+        
         self.readyWait(mediaEntry.getId())
         
         #find it!
